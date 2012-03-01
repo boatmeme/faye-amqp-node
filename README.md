@@ -2,8 +2,8 @@
 
 This plugin provides an AMQP-based backend for the [Faye](http://faye.jcoglan.com)
 messaging server. It allows a single Faye service to be distributed across many
-front-end web servers by storing state and routing messages through any messaging service that implements AMQP like
-Qpid, RabbitMQ, or StormMQ.
+front-end web servers by storing state and routing messages through any messaging service that implements AMQP such as
+[RabbitMQ](http://www.rabbitmq.com/), [Qpid](http://qpid.apache.org), or [StormMQ](http://stormmq.com).
 
 
 ## Usage

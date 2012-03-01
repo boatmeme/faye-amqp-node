@@ -1,0 +1,26 @@
+{ "name"            : "faye-amqp"
+, "description"     : "AMQP backend engine for Faye"
+, "homepage"        : "http://github.com/boatmeme/faye-amqp-node"
+, "author"          : "Jonathan Griggs <jonathan.griggs@gmail.com> (http://memetix.com/)"
+, "keywords"        : ["pubsub", "bayeux", "amqp", "messaging"]
+
+, "version"         : "0.1.0"
+, "engines"         : {"node": ">=0.4.0"}
+, "main"            : "./faye-amqp"
+, "dependencies"    : {"amqp": ""}
+, "devDependencies" : {"jsclass": ""}
+
+, "scripts"         : {"test": "node spec/runner.js"}
+
+, "bugs"            : "http://github.com/boatmeme/faye-amqp-node/issues"
+
+, "licenses"        : [ { "type"    : "MIT"
+                        , "url"     : "http://www.opensource.org/licenses/mit-license.php"
+                        }
+                      ]
+
+, "repositories"    : [ { "type"    : "git"
+                        , "url"     : "git://github.com/boatmeme/faye-amqp-node.git"
+                        }
+                      ]
+}
