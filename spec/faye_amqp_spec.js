@@ -10,9 +10,9 @@ JS.ENV.FayeAmqpSpec = JS.Test.describe("AMQP engine", function() { with(this) {
     after(function(resume) { with(this) {
 
         sync(function() {
-            /*
-            engine.disconnect()
             
+            engine.disconnect()
+            /*
             var amqp = amqp.createConnection({url:localhost});
 
             redis.auth(engineOpts.password)

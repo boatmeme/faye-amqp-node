@@ -27,7 +27,7 @@ Engine.create = function(server, options) {
 
 Engine.prototype = {
     createClient: function(callback, context) {
-        console.log("called createClient");
+        //console.log("called createClient");
         var clientId = this._namespace.generate();
         this._server.debug('Created new client ?', clientId);
         this.ping(clientId);
@@ -66,13 +66,17 @@ Engine.prototype = {
     },
 
     disconnect: function() {
-        console.log("Called disconnect");
-        this._queue.destroy();
-        this._conn.end();
+        //console.log("Called disconnect");
+        /*
+        if(typeof this._conn !== 'undefined') {
+            this._conn.end();
+            this._conn = undefined;
+        }
+        */
     },
   
    destroyClient: function(clientId, callback, context) {
-      console.log("Called destroyClient");
+      //console.log("Called destroyClient");
       if (!this._namespace.exists(clientId)) return;
       var clients = this._clients;
       
@@ -82,19 +86,18 @@ Engine.prototype = {
       this.removeTimeout(clientId);
       this._namespace.release(clientId);
       delete this._messages[clientId];
-      console.log("Destroyed" + clientId);
       this._server.debug('Destroyed client ?', clientId);
       this._server.trigger('disconnect', clientId);
       if (callback) callback.call(context);
     },
     
     clientExists: function(clientId, callback, context) {
-      console.log("Called clientExists");
+      //console.log("Called clientExists");
       callback.call(context, this._namespace.exists(clientId));
     },
     
     ping: function(clientId) {
-      console.log("Called ping");
+      //console.log("Called ping");
       var timeout = this._server.timeout;
       if (typeof timeout !== 'number') return;
       
@@ -106,7 +109,7 @@ Engine.prototype = {
     },
     
     subscribe: function(clientId, channel, callback, context) {
-      console.log("Called subscribe");
+      //console.log("Called subscribe");
       var clients = this._clients, channels = this._channels;
       
       clients[clientId] = clients[clientId] || new Faye.Set();
@@ -121,7 +124,7 @@ Engine.prototype = {
     },
     
     unsubscribe: function(clientId, channel, callback, context) {
-      console.log("Called unsubscribe");
+      //console.log("Called unsubscribe");
       var clients  = this._clients,
           channels = this._channels,
           trigger  = false;
@@ -142,21 +145,23 @@ Engine.prototype = {
     },
     
     publish: function(message, channels) {
-      console.log("Called publish");
+      //console.log("Called publish");
       this._server.debug('Publishing message ?', message);
       self = this;
       
-      this.getAmqpClient(function(conn) { 
-        var transportMessage = {fayeMessage: message, fayeChannels:channels};
-        self._exchange.publish('',transportMessage,{});
-        
-        self._server.trigger('publish', message.clientId, message.channel, message.data);
-      });     
+      
+        this.getAmqpClient(function(conn) { 
+            var transportMessage = {fayeMessage: message, fayeChannels:channels};
+            self._exchange.publish('',transportMessage,{});
+            console.log("Published: " + JSON.stringify(transportMessage));
+            self._server.trigger('publish', message.clientId, message.channel, message.data);
+        });
+      
     },
     
     unpackMessage: function(message, channels) {
-        console.log(JSON.stringify(message));
-        console.log(JSON.stringify(channels));
+        //console.log(JSON.stringify(message));
+        //console.log(JSON.stringify(channels));
         
         var messages = this._messages,
             clients  = new Faye.Set(),
@@ -177,8 +182,9 @@ Engine.prototype = {
     },
     
     emptyQueue: function(clientId) {
-      console.log("Called empty queue");
+      //console.log("Called empty queue");
       if (!this._server.hasConnection(clientId)) return;
+      console.log(this._messages[clientId]);
       this._server.deliver(clientId, this._messages[clientId]);
       delete this._messages[clientId];
     }
