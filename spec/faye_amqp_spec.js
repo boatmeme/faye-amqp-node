@@ -18,12 +18,13 @@ JS.ENV.FayeAmqpSpec = JS.Test.describe("AMQP engine", function() { with(this) {
             redis.auth(engineOpts.password)
             redis.flushall(function() {
             redis.end()
-            resume()
             */
+            resume()
         })
 
     }})
 
+/*
     it("translates Bayeux channels to AMQP channels", function() { with(this) {
         var engine = new AmqpEngine();
         var bayeuxChannel = "/foo";
@@ -47,7 +48,7 @@ JS.ENV.FayeAmqpSpec = JS.Test.describe("AMQP engine", function() { with(this) {
         assertEqual(amqpChannel,engine.toAmqpChannel(bayeuxChannel));
     }});
 
-    
+*/  
     itShouldBehaveLike("faye engine")
 
     describe("distribution", function() { with(this) {
